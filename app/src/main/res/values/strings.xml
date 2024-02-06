@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Oblig1</string>
+    <string name="the_quiz_app">The Quiz App</string>
+    <string name="enter_game">Enter Game</string>
+    <string name="enter_the_gallery">Enter The Gallery</string>
+
+
+    <string name="add_new_item">Add new Item</string>
 </resources>
