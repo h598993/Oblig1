@@ -1,6 +1,7 @@
 package com.example.oblig1;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +32,12 @@ ArrayList<Item> items;
     @Override
     public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
     holder.name.setText(items.get(position).getName());
-    holder.imageView.setImageResource(items.get(position).getImage());
+    //holder.imageView.setImageResource(items.get(position).getImage());
+        Uri imageUri = items.get(position).getImageUri();
+        if(imageUri != null){
+            holder.imageView.setImageURI(null);
+            holder.imageView.setImageURI(imageUri);
+        }
     }
 
     @Override

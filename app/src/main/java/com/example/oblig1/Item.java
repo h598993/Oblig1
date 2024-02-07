@@ -1,11 +1,13 @@
 package com.example.oblig1;
 
+import android.net.Uri;
+
 public class Item {
 
     String name;
-    int image;
+    Uri image;
 
-    public Item(String name, int image) {
+    public Item(String name, Uri image) {
         this.name = name;
         this.image = image;
     }
@@ -14,7 +16,7 @@ public class Item {
         return name;
     }
 
-    public int getImage() {
+    public Uri getImageUri() {
         return image;
     }
 }
