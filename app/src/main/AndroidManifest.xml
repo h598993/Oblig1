@@ -30,6 +30,7 @@
 
         <activity android:name=".Gallery"/>
         <activity android:name=".AddItem"/>
+        <activity android:name=".GameActivity"/>
 
     </application>
 
