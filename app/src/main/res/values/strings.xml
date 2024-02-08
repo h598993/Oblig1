@@ -4,6 +4,10 @@
     <string name="enter_game">Enter Game</string>
     <string name="enter_the_gallery">Enter The Gallery</string>
 
-
+    <string name="back">Back</string>
     <string name="add_new_item">Add new Item</string>
+    <string name="add_dog_to_list">Add dog to list</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="back_gallery">Back</string>
+
 </resources>
