@@ -34,7 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+// Button for changing to game menu
+        quizBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent gotoGameMenu = new Intent(MainActivity.this, GameActivity.class);
+                startActivity(gotoGameMenu);
+            }
+        });
 
 
 
