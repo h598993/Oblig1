@@ -16,5 +16,7 @@
     <string name="optionthree">OptionThree</string>
     <string name="image_to_guess">Image to guess</string>
     <string name="imagetoguess">ImageToGuess</string>
+    <string name="sortAZ">SortAZ</string>
+    <string name="sortza">SortZA</string>
 
 </resources>
