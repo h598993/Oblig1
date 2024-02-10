@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -38,6 +39,17 @@ ArrayList<Item> items;
             holder.imageView.setImageURI(null);
             holder.imageView.setImageURI(imageUri);
         }
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                items.remove(position);
+                notifyItemRemoved(position);
+                notifyItemRangeChanged(position,items.size());
+            }
+        });
+
+
     }
 
     @Override
@@ -50,11 +62,14 @@ ArrayList<Item> items;
 
         ImageView imageView;
         TextView name;
+
+        ImageButton deleteButton;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
             imageView = itemView.findViewById(R.id.imageView);
             name = itemView.findViewById(R.id.itemName);
+            deleteButton = itemView.findViewById(R.id.button_image_delete);
         }
     }
 
