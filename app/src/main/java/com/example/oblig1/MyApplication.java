@@ -9,13 +9,12 @@ import java.util.ArrayList;
 public class MyApplication extends Application implements ComponentCallbacks2 {
     ArrayList<Item> items = new ArrayList<>();
     ArrayList<Uri> dogImages = new ArrayList<>();
+
     @Override
     public void onCreate() {
         super.onCreate();
 
-setupItemModels();
-
-
+        setupItemModels();
     }
 
     public void addItemToList(Item item) {

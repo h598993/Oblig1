@@ -44,6 +44,7 @@ public class Gallery extends AppCompatActivity {
             public void onClick(View v) {
                 Intent goBack = new Intent(Gallery.this, MainActivity.class);
                 startActivity(goBack);
+                // finish();
             }
         });
 

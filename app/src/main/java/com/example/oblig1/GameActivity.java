@@ -17,10 +17,10 @@ import java.util.Random;
 
 public class GameActivity extends AppCompatActivity {
 
-Random randomObjectToShow;
-Random randomPosition;
-int counter;
-int correctTextIndex;
+    Random randomObjectToShow;
+    Random randomPosition;
+    int counter;
+    int correctTextIndex;
 
     ImageView image;
     TextView optionOne;
@@ -43,7 +43,7 @@ int correctTextIndex;
         //Score counter
         counter = 0;
 
-       setupQuiz();
+        setupQuiz();
 
 
         // setting up click events
@@ -51,61 +51,54 @@ int correctTextIndex;
         optionOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(correctTextIndex == 0){
+                if (correctTextIndex == 0) {
                     counter++;
                     counterView.setText(String.valueOf(counter));
                     answerResponse.setText("Correct!");
                     setupQuiz();
-                }else{
+                } else {
 
                     answerResponse.setText("Wrong Ansver");
                     setupQuiz();
                 }
 
 
-
             }
         });
-
-
 
 
         optionTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(correctTextIndex == 1){
+                if (correctTextIndex == 1) {
                     counter++;
                     counterView.setText(String.valueOf(counter));
                     answerResponse.setText("Correct!");
                     setupQuiz();
-                }else{
+                } else {
 
                     answerResponse.setText("Wrong Ansver");
                     setupQuiz();
                 }
-
 
 
             }
         });
 
 
-
-
         optionThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(correctTextIndex == 2){
+                if (correctTextIndex == 2) {
                     counter++;
                     counterView.setText(String.valueOf(counter));
                     answerResponse.setText("Correct!");
                     setupQuiz();
-                }else{
+                } else {
 
                     answerResponse.setText("Wrong Ansver");
                     setupQuiz();
                 }
-
 
 
             }
@@ -122,12 +115,10 @@ int correctTextIndex;
         });
 
 
-
-
     }
 
 
-    private void setupQuiz (){
+    private void setupQuiz() {
 
         globalState = (MyApplication) getApplicationContext();
 
@@ -140,23 +131,19 @@ int correctTextIndex;
         counterView = findViewById(R.id.text_score);
 
 
-
-
         // Storing list of strings to choose from in the quiz
-        String[] randomDogNames = {"Puddel","Dalmantiner","Sjefer","Fuglehund","Rottveiler"};
+        String[] randomDogNames = {"Puddel", "Dalmantiner", "Sjefer", "Fuglehund", "Rottveiler"};
 
         //setting up the list to choose from
         ArrayList<Item> items = globalState.getItems();
         int nrOfItems = items.size();
 
 
-
-
         //Setting up first picture
         Random r1 = new Random();
         int randomObjectIndex = r1.nextInt(nrOfItems);
 
-        Item firstItem =  items.get(randomObjectIndex);
+        Item firstItem = items.get(randomObjectIndex);
         image.setImageURI(firstItem.getImageUri());
 
         //setting up first text
@@ -165,20 +152,19 @@ int correctTextIndex;
         correctTextIndex = r2.nextInt(3);
 
 
-
-    // really bad way of making sure to not pick the same name twice
+        // really bad way of making sure to not pick the same name twice
         int firstPick = r2.nextInt(randomDogNames.length);
         int secondPick = r2.nextInt(randomDogNames.length);
-        if(firstPick == secondPick){
-            while (true){
+        if (firstPick == secondPick) {
+            while (true) {
                 secondPick = r2.nextInt(randomDogNames.length);
-                if(firstPick != secondPick) break;
+                if (firstPick != secondPick) break;
             }
         }
 
 
         //Binding the correct text to one of the three options then filling in the remaing with random names from the list
-        switch (correctTextIndex){
+        switch (correctTextIndex) {
 
             case 0:
                 optionOne.setText(correctText);
@@ -210,9 +196,6 @@ int correctTextIndex;
 
 
     }
-
-
-
 
 
 }

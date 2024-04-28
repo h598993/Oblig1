@@ -36,7 +36,6 @@ ArrayList<Item> items;
     //holder.imageView.setImageResource(items.get(position).getImage());
         Uri imageUri = items.get(position).getImageUri();
         if(imageUri != null){
-            holder.imageView.setImageURI(null);
             holder.imageView.setImageURI(imageUri);
         }
 
