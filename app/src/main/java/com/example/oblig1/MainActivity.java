@@ -48,4 +48,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    public View getQuizBtn() {
+        return this.quizBtn;
+    }
+
+
 }
