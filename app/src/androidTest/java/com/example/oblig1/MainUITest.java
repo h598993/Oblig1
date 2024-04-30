@@ -71,7 +71,7 @@ public class MainUITest {
 
 
     @Test
-    public void correctSubActivity_nte() {
+    public void correctSubActivity() {
 
         activityRule.getScenario().onActivity( mainActivity -> {
 

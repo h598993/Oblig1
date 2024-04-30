@@ -27,7 +27,7 @@ public class GameActivity extends AppCompatActivity {
 
     MyApplication globalState;
     //tilfeldige navn
-    String[] randomDogNames = {"Puddel", "Dalmantiner", "Sjefer", "Fuglehund", "Rottveiler"};
+    String[] randomDogNames = {"Puddel", "Dalmantiner", "Sjefer", "Fuglehund", "Rottweiler"};
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,4 +99,24 @@ public class GameActivity extends AppCompatActivity {
         }
         setupNewQuiz();
     }
+
+
+
+
+
+    public TextView getCounterView() {
+        return counterView;
+    }
+
+
+    public GameViewModel getGameViewModel() {
+        return gameViewModel;
+    }
+
+
+
+
+
+
+
 }
