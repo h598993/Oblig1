@@ -2,17 +2,28 @@ package com.example.oblig1;
 
 import android.net.Uri;
 
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.util.Comparator;
 
+@Entity
 public class Item {
+    @PrimaryKey(autoGenerate=true)
+    private int uid;
+    @ColumnInfo(name = "name")
+    private String name;
 
-    String name;
-    Uri image;
+    @ColumnInfo(name = "image")
+    private Uri image;
 
     public Item(String name, Uri image) {
         this.name = name;
         this.image = image;
     }
+
+    public Item(){};
 
 
     public static Comparator<Item> compareByNameAZ (){
@@ -38,5 +49,21 @@ public class Item {
 
     public Uri getImageUri() {
         return image;
+    }
+
+    public int getUid() {
+        return uid;
+    }
+
+    public void setUid(int uid) {
+        this.uid = uid;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImage(Uri image) {
+        this.image = image;
     }
 }
