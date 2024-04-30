@@ -12,6 +12,8 @@ public class MainActivity extends AppCompatActivity {
     Button galleryBtn;
     Button quizBtn;
 
+    //test
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
