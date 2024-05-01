@@ -1,5 +1,6 @@
 package com.example.oblig1;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -13,38 +14,58 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
-Context context;
-ArrayList<Item> items;
-    public RecyclerViewAdapter(Context context, ArrayList<Item> items ){
-    this.context = context;
-    this.items = items;
+    Context context;
+    List<Item> items;
+    private ItemDeleteListener listener;
+
+    public RecyclerViewAdapter(Context context, List<Item> items, ItemDeleteListener listener) {
+        this.context = context;
+        this.items = items;
+        this.listener = listener;
+    }
+
+
+    // Method to update items
+    public void updateItems(List<Item> newItems) {
+        this.items = newItems;
+    }
+
+    // Method to sort items
+    public void sortItems(boolean ascending) {
+        if (ascending) {
+            Collections.sort(items, Item.compareByNameAZ());
+        } else {
+            Collections.sort(items, Item.compareByNameZA());
+        }
+        notifyDataSetChanged();
     }
 
     @NonNull
     @Override
     public RecyclerViewAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(R.layout.recycler_view_row,parent,false);
+        View view = inflater.inflate(R.layout.recycler_view_row, parent, false);
         return new RecyclerViewAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, int position) {
-    holder.name.setText(items.get(position).getName());
-    //holder.imageView.setImageResource(items.get(position).getImage());
-        Uri imageUri = items.get(position).getImageUri();
-        if(imageUri != null){
+    public void onBindViewHolder(@NonNull RecyclerViewAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        holder.name.setText(items.get(position).getName());
+
+        Uri imageUri = Uri.parse(items.get(position).getImage());
+        if (imageUri != null) {
             holder.imageView.setImageURI(imageUri);
         }
 
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                items.remove(position);
-                notifyItemRemoved(position);
-                notifyItemRangeChanged(position,items.size());
+                //Deletes item from DB and will also be removed from listview
+                listener.onDeleteItem(items.get(position));
             }
         });
 
@@ -63,6 +84,7 @@ ArrayList<Item> items;
         TextView name;
 
         ImageButton deleteButton;
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 

@@ -1,6 +1,7 @@
 package com.example.oblig1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button galleryBtn;
     Button quizBtn;
-
+    private ItemViewModel itemViewModel;
     //test
 
     @Override
@@ -22,8 +23,12 @@ public class MainActivity extends AppCompatActivity {
         quizBtn = findViewById(R.id.button_enterGame);
 
 
+        // Setup ViewModel
+        ItemDao itemDao = AppDatabase.getDatabase(getApplicationContext()).itemDao();
+        itemViewModel = new ViewModelProvider(this, new ItemViewModelFactory(itemDao)).get(ItemViewModel.class);
 
-
+        //method to delete all items
+        //itemViewModel.deleteAllItems();
 
         //Button logic to go to Gallery
         galleryBtn.setOnClickListener(new View.OnClickListener() {

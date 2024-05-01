@@ -37,7 +37,7 @@ public class MyApplication extends Application implements ComponentCallbacks2 {
         dogImages.add(Uri.parse("android.resource://com.example.oblig1/drawable/labrador"));
         for( int i = 0; i < dognames.length; i++){
 
-            items.add(new Item(dognames[i],dogImages.get(i)));
+            items.add(new Item(dognames[i],dogImages.get(i).toString()));
         }
 
 

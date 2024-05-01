@@ -1,14 +1,12 @@
 package com.example.oblig1;
 
-import android.net.Uri;
-
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.Comparator;
 
-@Entity
+@Entity(tableName = "items")
 public class Item {
     @PrimaryKey(autoGenerate=true)
     private int uid;
@@ -16,9 +14,9 @@ public class Item {
     private String name;
 
     @ColumnInfo(name = "image")
-    private Uri image;
+    private String image;
 
-    public Item(String name, Uri image) {
+    public Item(String name, String image) {
         this.name = name;
         this.image = image;
     }
@@ -47,7 +45,7 @@ public class Item {
         return name;
     }
 
-    public Uri getImageUri() {
+    public String getImage() {
         return image;
     }
 
@@ -63,7 +61,7 @@ public class Item {
         this.name = name;
     }
 
-    public void setImage(Uri image) {
+    public void setImage(String image) {
         this.image = image;
     }
 }
