@@ -1,15 +1,13 @@
 package com.example.oblig1;
 
-import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
@@ -33,6 +31,7 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        Uri myUri = Uri.parse("sad");
         //oppretter en kobling til viewmodel
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         globalState = (MyApplication) getApplicationContext();
@@ -57,7 +56,7 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<Item> items = globalState.getItems();
         gameViewModel.prepareQuiz(items, randomDogNames);
 
-        image.setImageURI(gameViewModel.getCurrentItem().getImageUri());
+        image.setImageURI(Uri.parse(gameViewModel.getCurrentItem().getImage()));
 
         optionOne.setText(gameViewModel.getOptions().get(0));
         optionTwo.setText(gameViewModel.getOptions().get(1));
@@ -69,7 +68,7 @@ public class GameActivity extends AppCompatActivity {
         ArrayList<Item> items = globalState.getItems();
         gameViewModel.prepareNewQuiz(items, randomDogNames);
 
-        image.setImageURI(gameViewModel.getCurrentItem().getImageUri());
+        image.setImageURI(Uri.parse(gameViewModel.getCurrentItem().getImage()));
 
         optionOne.setText(gameViewModel.getOptions().get(0));
         optionTwo.setText(gameViewModel.getOptions().get(1));

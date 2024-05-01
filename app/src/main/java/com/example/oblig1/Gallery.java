@@ -8,26 +8,53 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class Gallery extends AppCompatActivity {
-
+public class Gallery extends AppCompatActivity implements ItemDeleteListener {
+    private ItemViewModel itemViewModel;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_gallery);
+
+
+        // Setup ViewModel
+        ItemDao itemDao = AppDatabase.getDatabase(getApplicationContext()).itemDao();
+        itemViewModel = new ViewModelProvider(this, new ItemViewModelFactory(itemDao)).get(ItemViewModel.class);
+
+
+
+
         // referencing global state
         MyApplication globalState = (MyApplication) getApplicationContext();
-        setContentView(R.layout.activity_gallery);
+
         //backButton
         Button backBtn = findViewById(R.id.button_back_gallery);
         //Button for switching to add item activity
         Button addItemBtn = findViewById(R.id.button_addItem);
         Button sortAsc = findViewById(R.id.button_sort_asc);
         Button sortDec = findViewById(R.id.button_sort_dec);
+
+
+        // Setting up list
+        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
+        RecyclerViewAdapter adapter =  new RecyclerViewAdapter(this,Collections.emptyList(),this);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+        // Observing data changes
+        itemViewModel.getAllItems().observe(this, items -> {
+            adapter.updateItems(items);
+            adapter.notifyDataSetChanged();
+        });
+
 
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,38 +76,23 @@ public class Gallery extends AppCompatActivity {
         });
 
 
-
-
-
-
-        // Setting up list
-        RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
-        RecyclerViewAdapter adapter =  new RecyclerViewAdapter(this,globalState.getItems());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-        // Sort Logic
-
-        sortAsc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                globalState.getItems().sort(Item.compareByNameAZ());
-                adapter. notifyDataSetChanged();
-            }
+        // Sorting logic
+        sortAsc.setOnClickListener(v -> {
+            adapter.sortItems(true);  // True for ascending
         });
 
-        sortDec.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                globalState.getItems().sort(Item.compareByNameZA());
-                adapter.notifyDataSetChanged();
-            }
+        sortDec.setOnClickListener(v -> {
+            adapter.sortItems(false);  // False for descending
         });
 
 
 
+    }
+
+    //passing onDeleteItem to the recyclerview to be able to delte from DB
+    @Override
+    public void onDeleteItem(Item item) {
+        itemViewModel.deleteItem(item);
     }
 
 
