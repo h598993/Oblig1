@@ -48,26 +48,19 @@ import androidx.test.espresso.Espresso;
 public class MainUITest {
 
 
-    // tells the system to launch this activity before any of the tests
-    @Rule
-    public ActivityScenarioRule<MainActivity> activityRule =
+    // Forteller systemet at gitt aktivitet skal kjøres før hver test
+    @Rule public ActivityScenarioRule<MainActivity> activityRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
 
-    @Before
-    public void setupIntents() {
-        // initializes intents and begins recording intents
-        // in order to verify the intent, it must first be recorded
-        // triggering any action that call an intent that we want to verify with validation/stubbing
-        init();
-    }
+    // initializes intents and begins recording intents
+    // in order to verify the intent, it must first be recorded
+    // triggering any action that call an intent that we want to verify with validation/stubbing
+    @Before public void setupIntents() { init(); }
 
 
-    @After
-    public void teardownIntents() {
-        // Clears intent state, must be called after each test case
-        release();
-    }
+    // Clears intent state, must be called after each test case
+    @After public void teardownIntents() { release(); }
 
 
     @Test
@@ -82,7 +75,6 @@ public class MainUITest {
         //intended(hasComponent("com.example.oblig1.GameActivity"));
         intended(hasComponent(GameActivity.class.getName()));
     }
-
 
 
 

@@ -100,23 +100,10 @@ public class GameActivity extends AppCompatActivity {
         setupNewQuiz();
     }
 
-
-
-
-
-    public TextView getCounterView() {
-        return counterView;
-    }
-
-
+    // Lagt til for å kunne hente ut intern tilstand ifm. testing
     public GameViewModel getGameViewModel() {
         return gameViewModel;
     }
-
-
-
-
-
 
 
 }
