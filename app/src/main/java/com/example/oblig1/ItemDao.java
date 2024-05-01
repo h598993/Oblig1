@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -19,6 +20,9 @@ public interface ItemDao {
 
     @Query("SELECT * FROM items")
     LiveData<List<Item>> getAll();
+
+    @Query("SELECT * FROM items")
+    List<Item> getAllasList();
 
 
     @Query("DELETE FROM items")

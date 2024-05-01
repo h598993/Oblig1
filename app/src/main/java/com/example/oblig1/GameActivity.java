@@ -8,11 +8,14 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GameActivity extends AppCompatActivity {
+    ItemViewModel itemViewModel;
 
     private GameViewModel gameViewModel;
 
@@ -24,6 +27,7 @@ public class GameActivity extends AppCompatActivity {
     TextView answerResponse;
 
     MyApplication globalState;
+    ArrayList<Item> itemsAsArrayList;
     //tilfeldige navn
     String[] randomDogNames = {"Puddel", "Dalmantiner", "Sjefer", "Fuglehund", "Rottveiler"};
 
@@ -31,7 +35,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
-        Uri myUri = Uri.parse("sad");
+
+
+        // Setup ViewModel til itemdb
+        ItemDao itemDao = AppDatabase.getDatabase(getApplicationContext()).itemDao();
+        itemViewModel = new ViewModelProvider(this, new ItemViewModelFactory(itemDao)).get(ItemViewModel.class);
+
         //oppretter en kobling til viewmodel
         gameViewModel = new ViewModelProvider(this).get(GameViewModel.class);
         globalState = (MyApplication) getApplicationContext();
@@ -45,16 +54,23 @@ public class GameActivity extends AppCompatActivity {
         answerResponse = findViewById(R.id.answer_response);
         counterView.setText(String.valueOf(gameViewModel.getCounter()));
 
+        // Observer for LiveData
+        itemViewModel.getAllItems().observe(this, items -> {
+            itemsAsArrayList = new ArrayList<>(items);
+            setupQuiz();
+        });
+
+
         //setter opp quizen og lyttere på knappene første gang
-        setupQuiz();
+
         setupClickListeners();
     }
 
     //setter opp quizen ved første innlasting
     private void setupQuiz() {
 
-        ArrayList<Item> items = globalState.getItems();
-        gameViewModel.prepareQuiz(items, randomDogNames);
+
+        gameViewModel.prepareQuiz(itemsAsArrayList, randomDogNames);
 
         image.setImageURI(Uri.parse(gameViewModel.getCurrentItem().getImage()));
 
@@ -65,8 +81,8 @@ public class GameActivity extends AppCompatActivity {
 
     //Setter opp ny quiz når bruker trykker på et svar
     private void setupNewQuiz() {
-        ArrayList<Item> items = globalState.getItems();
-        gameViewModel.prepareNewQuiz(items, randomDogNames);
+
+        gameViewModel.prepareNewQuiz(itemsAsArrayList, randomDogNames);
 
         image.setImageURI(Uri.parse(gameViewModel.getCurrentItem().getImage()));
 
