@@ -35,20 +35,19 @@ public class AddItem extends AppCompatActivity {
         EditText dogNameInput = findViewById(R.id.input_dog_race_edit);
 
 
-
         // ViewModel setup
         ItemDao itemDao = AppDatabase.getDatabase(getApplicationContext()).itemDao();
         itemViewModel = new ViewModelProvider(this, new ItemViewModelFactory(itemDao)).get(ItemViewModel.class);
 
-        //backButton
+        //tilbakeknapp, stenger ned aktiviteten
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                goBack();
+                finish();
             }
         });
 
-        //Using opendocument to open iamge media instad of the photopicker due to permission issues
+        //åpner bildegalleri for valg av bilde. Endret fra imagepicker da det ga permission issues i DB
         addImageBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,24 +60,20 @@ public class AddItem extends AppCompatActivity {
         });
 
 
-//oberserver data for testing
+        //fester en observer til livedata for å logge data i databasen. Kan fjeres
         itemViewModel.getAllItems().observe(this, items -> {
             for (Item item : items) {
                 Log.d("LiveDataLog", "Observed Item: " + item.getName());
             }
         });
-
+        //lytter på knapp for å legge til valgt bilde og navn i DB
         addToList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Get the input value from EditText
+                //lagrer valgt navn og bilde til DB. Endret bilde fra URi til streng for lagring i DB
                 String userInput = dogNameInput.getText().toString();
-                //remove when finished
-                //globalState.addItemToList(new Item(userInput, selectedImageUri.toString()));
-                //Adding to database
-
                 itemViewModel.insert(new Item(userInput, selectedImageUri.toString()));
-                goBack();
+                finish();
             }
 
 
@@ -87,7 +82,7 @@ public class AddItem extends AppCompatActivity {
 
     }
 
-
+    //Henter refferanse som URI når bruker har valgt et bilde
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -98,19 +93,14 @@ public class AddItem extends AppCompatActivity {
         }
     }
 
+
+    //Legger til tilatelse for appen til å hente bildet fra angitt lagringsplass ved URI ved senrer annleding
     private void persistUriPermission(Uri uri) {
         if (!uri.toString().startsWith("android")) {
             final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
             getContentResolver().takePersistableUriPermission(uri, takeFlags);
         }
     }
-
-
-    private void goBack() {
-        finish();
-    }
-
-
 }
 
 
