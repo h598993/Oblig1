@@ -28,14 +28,12 @@ public class AddItem extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Access to global state can be deleted
-        MyApplication globalState = (MyApplication) getApplicationContext();
         setContentView(R.layout.activity_add_item);
         Button addImageBtn = findViewById(R.id.button_get_image);
         Button addToList = findViewById(R.id.button_add_dog);
         Button backButton = findViewById(R.id.button5);
         EditText dogNameInput = findViewById(R.id.input_dog_race_edit);
-        Uri photoUri = null;
+
 
 
         // ViewModel setup
