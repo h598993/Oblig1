@@ -3,6 +3,7 @@ package com.example.oblig1;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ public class GameActivity extends AppCompatActivity {
     TextView optionThree;
     TextView counterView;
     TextView answerResponse;
+    Button backButton;
 
     MyApplication globalState;
     ArrayList<Item> itemsAsArrayList;
@@ -52,6 +54,7 @@ public class GameActivity extends AppCompatActivity {
         optionThree = findViewById(R.id.option_three);
         counterView = findViewById(R.id.text_score);
         answerResponse = findViewById(R.id.answer_response);
+        backButton = findViewById(R.id.button_back_game);
         counterView.setText(String.valueOf(gameViewModel.getCounter()));
 
         // Observer for LiveData
@@ -101,6 +104,13 @@ public class GameActivity extends AppCompatActivity {
         optionOne.setOnClickListener(checkAnswerListener);
         optionTwo.setOnClickListener(checkAnswerListener);
         optionThree.setOnClickListener(checkAnswerListener);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     // sjekker om det valgte svaret er riktig
@@ -115,10 +125,11 @@ public class GameActivity extends AppCompatActivity {
         setupNewQuiz();
     }
 
+
     // Lagt til for å kunne hente ut intern tilstand ifm. testing
     public GameViewModel getGameViewModel() {
         return gameViewModel;
     }
 
-
 }
+
