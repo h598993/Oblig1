@@ -12,8 +12,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button galleryBtn;
     Button quizBtn;
-    private ItemViewModel itemViewModel;
-    //test
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,14 +22,7 @@ public class MainActivity extends AppCompatActivity {
         quizBtn = findViewById(R.id.button_enterGame);
 
 
-        // Setup ViewModel
-        ItemDao itemDao = AppDatabase.getDatabase(getApplicationContext()).itemDao();
-        itemViewModel = new ViewModelProvider(this, new ItemViewModelFactory(itemDao)).get(ItemViewModel.class);
-
-        //method to delete all items
-        //itemViewModel.deleteAllItems();
-
-        //Button logic to go to Gallery
+        //Knapp for å gå til galleriet
         galleryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,8 +32,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-// Button for changing to game menu
+        // Knapp for å gå til nytt spill
         quizBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(gotoGameMenu);
             }
         });
-
 
 
     }

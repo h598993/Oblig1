@@ -17,6 +17,7 @@ import java.util.Collections;
 
 public class Gallery extends AppCompatActivity implements ItemDeleteListener {
     private ItemViewModel itemViewModel;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,28 +29,21 @@ public class Gallery extends AppCompatActivity implements ItemDeleteListener {
         itemViewModel = new ViewModelProvider(this, new ItemViewModelFactory(itemDao)).get(ItemViewModel.class);
 
 
-
-
-        // referencing global state
-        MyApplication globalState = (MyApplication) getApplicationContext();
-
-        //backButton
+        //skaffer refferanser til knapper fra xml.
         Button backBtn = findViewById(R.id.button_back_gallery);
-        //Button for switching to add item activity
         Button addItemBtn = findViewById(R.id.button_addItem);
         Button sortAsc = findViewById(R.id.button_sort_asc);
         Button sortDec = findViewById(R.id.button_sort_dec);
 
 
-        // Setting up list
+        //Setter opp listevisningen
         RecyclerView recyclerView = findViewById(R.id.mRecyclerView);
-        RecyclerViewAdapter adapter =  new RecyclerViewAdapter(this,Collections.emptyList(),this);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, Collections.emptyList(), this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-
-        // Observing data changes
+        //Observer om data endrer seg i DB og oppdaterer listen via recycleradapter
         itemViewModel.getAllItems().observe(this, items -> {
             adapter.updateItems(items);
             adapter.notifyDataSetChanged();
@@ -59,9 +53,8 @@ public class Gallery extends AppCompatActivity implements ItemDeleteListener {
         addItemBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goToNewItemActivity = new Intent(Gallery.this, AddItem.class );
+                Intent goToNewItemActivity = new Intent(Gallery.this, AddItem.class);
                 startActivity(goToNewItemActivity);
-
             }
         });
 
@@ -69,14 +62,12 @@ public class Gallery extends AppCompatActivity implements ItemDeleteListener {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent goBack = new Intent(Gallery.this, MainActivity.class);
-                startActivity(goBack);
-                // finish();
+                finish();
             }
         });
 
 
-        // Sorting logic
+        // Sorterer listen
         sortAsc.setOnClickListener(v -> {
             adapter.sortItems(true);  // True for ascending
         });
@@ -86,10 +77,9 @@ public class Gallery extends AppCompatActivity implements ItemDeleteListener {
         });
 
 
-
     }
 
-    //passing onDeleteItem to the recyclerview to be able to delte from DB
+    //implementasjon av ItemDeleteListener brukergrensesnittet som blir sendt til recyclerviewadapter for å kunne slette elementer
     @Override
     public void onDeleteItem(Item item) {
         itemViewModel.deleteItem(item);

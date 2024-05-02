@@ -29,12 +29,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    // Method to update items
+    // Oppdaterer listen
     public void updateItems(List<Item> newItems) {
         this.items = newItems;
     }
 
-    // Method to sort items
+    // Sorterer listen
     public void sortItems(boolean ascending) {
         if (ascending) {
             Collections.sort(items, Item.compareByNameAZ());
@@ -64,7 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Deletes item from DB and will also be removed from listview
+                //Fjerner elementet fra databasen og vil også bli fjernet fra listen pga obersver i Galleryklassen
                 listener.onDeleteItem(items.get(position));
             }
         });

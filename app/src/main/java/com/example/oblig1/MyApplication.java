@@ -14,6 +14,7 @@ public class MyApplication extends Application implements ComponentCallbacks2 {
         setupItemModels();
     }
 
+    //Legger til elementer til galleriet dersom databasen er tom
     private void setupItemModels() {
         ArrayList<Item> items = new ArrayList<>();
         ArrayList<Uri> dogImages = new ArrayList<>();
