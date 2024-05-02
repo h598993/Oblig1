@@ -14,7 +14,8 @@ public class MyApplication extends Application implements ComponentCallbacks2 {
         setupItemModels();
     }
 
-    private void setupItemModels(){
+    //Legger til elementer til galleriet dersom databasen er tom
+    private void setupItemModels() {
         ArrayList<Item> items = new ArrayList<>();
         ArrayList<Uri> dogImages = new ArrayList<>();
 
@@ -27,22 +28,20 @@ public class MyApplication extends Application implements ComponentCallbacks2 {
         dogImages.add(Uri.parse("android.resource://com.example.oblig1/drawable/bulldog"));
         dogImages.add(Uri.parse("android.resource://com.example.oblig1/drawable/cockerspaniel"));
         dogImages.add(Uri.parse("android.resource://com.example.oblig1/drawable/labrador"));
-        new Thread(){
+        new Thread() {
             @Override
             public void run() {
                 super.run();
-                for( int i = 0; i < dognames.length; i++){
-                    itemDao.insertItem(new Item(dognames[i],dogImages.get(i).toString()));
+                if (itemDao.getAllasList().size() == 0) {
+                    for (int i = 0; i < dognames.length; i++) {
+                        itemDao.insertItem(new Item(dognames[i], dogImages.get(i).toString()));
+                    }
                 }
             }
         }.start();
 
 
-
-
     }
-
-
 
 
 }
