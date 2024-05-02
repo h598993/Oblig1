@@ -8,10 +8,16 @@
       <entry key="QuizUITest">
         <State />
       </entry>
+      <entry key="activityResult_DispCorrNumDogs_afterAddingDog()">
+        <State />
+      </entry>
       <entry key="app">
         <State />
       </entry>
       <entry key="correctSubActivity()">
+        <State />
+      </entry>
+      <entry key="testDeleteDog()">
         <State />
       </entry>
     </value>

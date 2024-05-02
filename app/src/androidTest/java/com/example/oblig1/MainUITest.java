@@ -56,6 +56,9 @@ public class MainUITest {
     // initializes intents and begins recording intents
     // in order to verify the intent, it must first be recorded
     // triggering any action that call an intent that we want to verify with validation/stubbing
+    // I dette tilfellet benyttes kun recording-delen, lytter etter en intent for å
+    // bekrefte om den ble launchet
+    // For at init() skal initialisere en intent, så må en slik intent først defineres separat
     @Before public void setupIntents() { init(); }
 
 
@@ -75,6 +78,26 @@ public class MainUITest {
         //intended(hasComponent("com.example.oblig1.GameActivity"));
         intended(hasComponent(GameActivity.class.getName()));
     }
+
+
+
+    /*
+
+    EN MER RIKTIG MÅTE Å GJØRE DETTE PÅ
+
+    @Test
+    public void validateIntentSentToPackage() {
+        // User action that results in an external "phone" activity being launched.
+        user.clickOnView(system.getView(R.id.callButton));
+
+        // Using a canned RecordedIntentMatcher to validate that an intent resolving
+        // to the "phone" activity has been sent.
+        intended(toPackage("com.android.phone"));
+    }
+
+    */
+
+
 
 
 

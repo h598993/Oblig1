@@ -96,4 +96,9 @@ public class Gallery extends AppCompatActivity implements ItemDeleteListener {
     }
 
 
+    // Lagt til for å kunne hente ut info. om intern tilstand ifm. testing
+    public ItemViewModel getItemViewModel() {
+        return itemViewModel;
+    }
+
 }

@@ -76,7 +76,7 @@ public class AddItem extends AppCompatActivity {
                 // Get the input value from EditText
                 String userInput = dogNameInput.getText().toString();
                 //remove when finished
-                globalState.addItemToList(new Item(userInput, selectedImageUri.toString()));
+                //globalState.addItemToList(new Item(userInput, selectedImageUri.toString()));
                 //Adding to database
 
                 itemViewModel.insert(new Item(userInput, selectedImageUri.toString()));
@@ -101,14 +101,15 @@ public class AddItem extends AppCompatActivity {
     }
 
     private void persistUriPermission(Uri uri) {
-        final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
-        getContentResolver().takePersistableUriPermission(uri, takeFlags);
+        if (!uri.toString().startsWith("android")) {
+            final int takeFlags = Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION;
+            getContentResolver().takePersistableUriPermission(uri, takeFlags);
+        }
     }
 
 
     private void goBack() {
-        Intent goBack = new Intent(AddItem.this, Gallery.class);
-        startActivity(goBack);
+        finish();
     }
 
 

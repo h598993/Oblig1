@@ -25,6 +25,14 @@ public class ItemViewModel extends ViewModel {
         return allItems;
     }
 
+    // Method to get number of items in DB
+    public int getNumItems() {
+        if (allItems == null || allItems.getValue() == null) {
+            return -1;
+        }
+        return allItems.getValue().size();
+    }
+
     // Method to insert an item
     public void insert(Item item) {
         AppDatabase.databaseWriteExecutor.execute(() -> {
