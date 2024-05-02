@@ -2,10 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="MainUITest">
-        <State />
-      </entry>
-      <entry key="QuizUITest">
+      <entry key="Tests in 'com.example.oblig1'">
         <State />
       </entry>
       <entry key="activityResult_DispCorrNumDogs_afterAddingDog()">
@@ -14,10 +11,13 @@
       <entry key="app">
         <State />
       </entry>
-      <entry key="correctSubActivity()">
+      <entry key="scoreUpdateFiveRoundsWrong()">
         <State />
       </entry>
-      <entry key="testDeleteDog()">
+      <entry key="testSlettHund()">
+        <State />
+      </entry>
+      <entry key="verifyCorrectSubActivity()">
         <State />
       </entry>
     </value>

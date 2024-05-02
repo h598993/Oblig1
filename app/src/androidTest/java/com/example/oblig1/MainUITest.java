@@ -9,16 +9,21 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.Intents.init;
 import static androidx.test.espresso.intent.Intents.release;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
+/**
+ * Denne test-klassen sjekker at riktig sub-activity blir launchet ved klikk på "Enter Game".
+ */
 
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class MainUITest {
-
 
     // Forteller systemet at gitt aktivitet skal kjøres før hver test
     @Rule public ActivityScenarioRule<MainActivity> activityRule =
@@ -41,6 +46,7 @@ public class MainUITest {
     }
 
 
+    /** Sjekker at riktig sub-activity (selve quizen) blir launchet ved klikk på "Enter Game" */
     @Test
     public void verifyCorrectSubActivity() {
 
@@ -49,45 +55,13 @@ public class MainUITest {
             mainActivity.getQuizBtn().performClick();
         });
 
-        // Alternativ måte å utføre samme handlingen på
+        // En enklere måte å utføre samme handling som det over
+        //onView(withId(R.id.button_enterGame)).perform(click());
 
-
-
-        //intended(hasComponent("com.example.oblig1.GameActivity"));
+        // Espresso provides the ability to intercept outgoing intents based on matching criteria.
+        // init() records all intents that attempt to launch activities from the app under test.
+        // Using the intended() method you can assert that a given intent has been seen.
         intended(hasComponent(GameActivity.class.getName()));
+        //intended(hasComponent("com.example.oblig1.GameActivity"));  // Ekvivalent
     }
-
-
-
-    /*
-
-    EN MER RIKTIG MÅTE Å GJØRE DETTE PÅ
-
-    @Test
-    public void validateIntentSentToPackage() {
-        // User action that results in an external "phone" activity being launched.
-        user.clickOnView(system.getView(R.id.callButton));
-
-        // Using a canned RecordedIntentMatcher to validate that an intent resolving
-        // to the "phone" activity has been sent.
-        intended(toPackage("com.android.phone"));
-    }
-
-    */
-
 }
-
-
-
-// koble sammen aktivitets-klassen/objekt og test-cases,
-// slik at testcasen kan finne en riktig/en feil knapp,
-// og deretter sammenligne melding på skjerm med forventet resultat.
-
-
-
-// init()
-//    initializes intents and begins recording intents (for verification)
-//    triggering any action that call an intent that we want to verify with validation/stubbing
-
-
-

@@ -26,8 +26,7 @@ public class QuizUITest {
 
 
     // Forteller systemet at gitt aktivitet skal kjøres før hver test
-    @Rule
-    public ActivityScenarioRule<GameActivity> activityRule =
+    @Rule public ActivityScenarioRule<GameActivity> activityRule =
             new ActivityScenarioRule<>(GameActivity.class);
 
 
@@ -35,16 +34,20 @@ public class QuizUITest {
     @Test
     public void scoreUpdateFirstRoundCorrAns() {
         AtomicReference<Integer> riktigSvarIndexRef = new AtomicReference<>(null);
+        // Bruker activityRule til å hente ut gameActivity-objekt
         activityRule.getScenario().onActivity( gameActivity -> {
+            // Bruker activity-objekt til å lokalisere riktig svar
             int riktigSvarIndex = gameActivity.getGameViewModel().getCorrectTextIndex();
+            // // Lagrer lokasjon/indeks i en AtomicReference (til bruk utenfor onActivity)
             riktigSvarIndexRef.set(riktigSvarIndex);
         });
+        // Henter ut, og bruker indeksen til å trykke på riktig knapp (korrekt svaralternativ)
         switch(riktigSvarIndexRef.get()) {
             case 0:     onView(withId(R.id.option_one)).perform(click());   break;
             case 1:     onView(withId(R.id.option_two)).perform(click());   break;
             default:    onView(withId(R.id.option_three)).perform(click()); break;
         }
-        // Ettersom riktig svar ble valgt, skal det vises "Correct!" på skjermen
+        // Ettersom riktig svar ble valgt, skal det vises "Correct!" på skjermen (verifiseres)
         onView(withId(R.id.answer_response)).check(matches(withText("Correct!")));
         // Sammenligner score på skjermen med forventet resultat
         onView(withId(R.id.text_score)).check(matches(withText("1")));
@@ -56,10 +59,10 @@ public class QuizUITest {
     public void scoreUpdateFiveRoundsWrong() {
         AtomicReference<Integer> riktigSvarIndexRef = new AtomicReference<>(null);
         for (int i = 1; i<=5; i++) {
-            // Bruker activity-klassen til å lokalisere riktig svar
+            // Bruker activity-objekt til å lokalisere riktig svar
             activityRule.getScenario().onActivity(gameActivity -> {
                 int riktigSvarIndex = gameActivity.getGameViewModel().getCorrectTextIndex();
-                // Lagrer indeks/lokasjon i AtomicReference
+                // Lagrer lokasjon/indeks i en AtomicReference (til bruk utenfor onActivity)
                 riktigSvarIndexRef.set(riktigSvarIndex);
             });
             // Velger feil svar hver gang
@@ -71,6 +74,7 @@ public class QuizUITest {
             // Skal da vise "Wrong Answer" på skjermen
             onView(withId(R.id.answer_response)).check(matches(withText("Wrong Answer")));
         }
+        onView(withId(R.id.text_score)).check(matches(withText("0")));
     }
 
 
@@ -111,7 +115,7 @@ public class QuizUITest {
                 }
                 // Skal da vise "Correct!" på skjermen
                 onView(withId(R.id.answer_response)).check(matches(withText("Correct!")));
-                // Sammenligner score på skjermen med forventet resultat
+                // Sammenligner score på skjermen med forventet resultat (for gitt runde)
                 switch (runde) {
                     case 1: onView(withId(R.id.text_score)).check(matches(withText("1"))); break;
                     case 2: onView(withId(R.id.text_score)).check(matches(withText("2"))); break;
