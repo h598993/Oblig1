@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // La til denne for tilgang til knappen under testing
     public View getQuizBtn() {
         return this.quizBtn;
     }

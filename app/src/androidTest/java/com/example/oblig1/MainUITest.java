@@ -61,7 +61,7 @@ public class MainUITest {
         // Espresso provides the ability to intercept outgoing intents based on matching criteria.
         // init() records all intents that attempt to launch activities from the app under test.
         // Using the intended() method you can assert that a given intent has been seen.
-        intended(hasComponent(GameActivity.class.getName()));
-        //intended(hasComponent("com.example.oblig1.GameActivity"));  // Ekvivalent
+        //intended(hasComponent(GameActivity.class.getName()));
+        intended(hasComponent("com.example.oblig1.GameActivity"));  // Ekvivalent
     }
 }

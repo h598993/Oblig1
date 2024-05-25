@@ -95,6 +95,7 @@ public class GalleryUITest {
         // I stedenfor at gitt Intent starter en activity som etter brukerinteraksjon sender
         // en ActivityResult tilbake, så blir Intenten "fanget opp" (og blokkert) av init()
         // og den definerte stubben sendes automatisk som respons uten brukerinteraksjon.
+        // MERK! intending = fremtid (hvis... så STUB)
         intending(hasAction(Intent.ACTION_OPEN_DOCUMENT)).respondWith(result);
 
         AtomicReference<Integer> refAntallHunderDB = new AtomicReference<>(null);
@@ -112,6 +113,7 @@ public class GalleryUITest {
 
         // Verifiserer at det ble sendt ut en intent for AddItem-aktiviteten
         // Bruker hasComponent(...) for identifisering
+        // MERK! intended = fortid (validere om noe HAR skjedd)
         intended(hasComponent(AddItem.class.getName()));
 
         // Skjermen viser nå AddItem-aktiviteten: Utfører handlinger for å legge til Item/hund
